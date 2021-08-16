@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Kibbx</title>
+
+    <link rel="stylesheet"  href="/static/arrow.css"/>
+    <link rel="stylesheet"  href="/static/style.css"/>
+    <link rel="stylesheet"  href="/static/gallery.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400&family=Playball&family=WindSong:wght@500&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="main-container">
+        <p class="title">Kibbx</p>
+        <div class="main">
+            <div class="img-container">
+                <div class="gallery_pics">
+                    <img style="width:64px;height:64px;margin-top: 200px;" src="/static/loading1.gif">
+                    <p style="margin-top: 30px;font-size:18px;color: #59a6ea;">Loading ...</p>
+                </div>
+            </div>
+            <div class="toolbar">
+                <button id="btn_prev" class="arrowbtn arrowbtn-left"></button>
+                <button id="btn_next" class="arrowbtn arrowbtn-right"></button>
+                <button id="btn_last" class="arrowbtn arrowbtn-last"></button>
+            </div>
+            
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            var imageList = [];
+            
+            var index = 0;
+            getImageList();
+            var curImageId = "";
+
+            // Preview image
+            $('#btn_prev').on('click', function() {
+                if(imageList.length > 0){
+                    if(curImageId == ""){
+                        curImageId = imageList[0].id;
+                    }
+                    imageList.map(function (img, idx) {
+                        if(img.id == curImageId){
+                            if(index == 0){
+                                index = imageList.length - 1;
+                            }else{
+                                index = idx - 1;   
+                            }
+                            return;                         
+                        }
+                    });
+                    curImageId = imageList[index].id;
+                    let fileName = imageList[index].name;
+                    fileName = (imageList[index].name.length > 20) ? fileName.substring(0, 20) + "..." : fileName;
+                    $(".gallery_pics").html(`<img src="https://drive.google.com/thumbnail?id=` + curImageId + 
+                                            `&sz=h700" alt="No image found."><p data-toggle="tooltip" title="` + imageList[index].name + 
+                                            `">` + fileName + `</p>`);
+                    $('[data-toggle="tooltip"]').tooltip(); 
+                }
+            });
+
+            // Next image
+            $('#btn_next').on('click', function(){
+                if(imageList.length > 0){
+                    if(curImageId == ""){
+                        curImageId = imageList[0].id;
+                    }
+                    imageList.map(function (img, idx) {
+                        if(img.id == curImageId){
+                            if(index == imageList.length - 1){
+                                index = 0;
+                            }else{
+                                index = idx + 1;   
+                            }
+                            return;
+                        }
+                    });
+                    curImageId = imageList[index].id;
+                    let fileName = imageList[index].name;
+                    fileName = (imageList[index].name.length > 20) ? fileName.substring(0, 20) + "..." : fileName;
+                    
+                    $(".gallery_pics").html(`<img src="https://drive.google.com/thumbnail?id=` + curImageId + 
+                                            `&sz=h700" alt="No image found."><p data-toggle="tooltip" title="` + imageList[index].name + 
+                                            `">` + fileName + `</p>`);
+                    $('[data-toggle="tooltip"]').tooltip();
+                }
+            });
+
+            // Last image
+            $('#btn_last').on('click', function(){
+                displayLastImage();
+            });
+
+            function displayLastImage(){
+                if(imageList.length > 0){
+                    curImageId = imageList[0].id;
+                    index = 0;
+                    let fileName = imageList[index].name;
+                    fileName = (imageList[index].name.length > 20) ? fileName.substring(0, 20) + "..." : fileName;
+                    $(".gallery_pics").html(`<img src="https://drive.google.com/thumbnail?id=` + imageList[index].id + 
+                                            `&sz=h700" alt="No image found."><p data-toggle="tooltip" title="` + imageList[index].name + 
+                                            `">` + fileName + `</p>`);
+                    $('[data-toggle="tooltip"]').tooltip();
+                }
+            }
+
+            function getImageList(){
+                $.getJSON("/api/getfiles", function(data){
+                    imageList = data;
+                    // Sort images by createdTime (newer to older)
+                    imageList.sort( function(a, b) {
+                        return new Date(b.createdTime) - new Date(a.createdTime);
+                    });
+                    // console.log("imageList => ", imageList);
+                    displayLastImage();
+                });
+            }
+
+            // Update ImageList every 1 minute
+            setInterval(function(){ 
+                // console.log("setInterval");
+                getImageList();
+            }, 60000);
+
+           // If theres no activity for 2 minutes do something
+           var activityTimeout = setTimeout(getImageList, 120000);
+
+            function resetActive(){
+                clearTimeout(activityTimeout);
+                activityTimeout = setTimeout(getImageList, 120000);
+            }
+
+            $(document).bind('mousemove', function(){resetActive()});
+
+            // Fullscreen toggle
+            $('.gallery_pics').click(function(e) {
+                $(this).toggleClass('fullscreen');
+            });
+        });
+    </script>
+</body>
+</html>
+

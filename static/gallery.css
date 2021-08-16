@@ -1,0 +1,30 @@
+  .gallery_pics {
+    display: inline-block;
+    width: auto;
+    height: 500px;
+  }
+  .gallery_pics img {
+    width: auto;
+    height: 100%;
+  }
+  .gallery_pics:hover {
+    cursor: pointer;
+  }
+  .gallery_pics.fullscreen img {
+    width: auto;
+    height: 100%;
+  }
+  .gallery_pics.fullscreen {
+    z-index: 9999;
+    position: fixed;
+    margin: 0 0 0 0;
+    width: 100%;
+    height: 100%;
+    top: 0%;
+    left: 0%;
+    background-color: #525251;
+  }
+  .gallery_pics p{
+    margin-top: -50px;
+    color: white;
+  }
