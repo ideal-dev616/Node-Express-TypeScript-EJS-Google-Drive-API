@@ -64,7 +64,8 @@
                     let fileName = imageList[index].name;
                     fileName = (imageList[index].name.length > 100) ? fileName.substring(0, 100) + "..." : fileName;
                     $(".gallery_pics").html(`<img src="https://drive.google.com/thumbnail?id=` + curImageId + 
-                                            `&sz=h700" alt="No image found."><p>` + fileName + `</p>`);
+                                            `&sz=h700" alt="No image found."><div style="width:100%; text-align:center"><p>` + fileName + 
+                                            `</p></div>`);
                 }
             });
 
@@ -89,7 +90,8 @@
                     fileName = (imageList[index].name.length > 100) ? fileName.substring(0, 100) + "..." : fileName;
                     
                     $(".gallery_pics").html(`<img src="https://drive.google.com/thumbnail?id=` + curImageId + 
-                                            `&sz=h700" alt="No image found."><div style="width:100%; text-align:center"><p>` + fileName + `</p></div>`);
+                                            `&sz=h700" alt="No image found."><div style="width:100%; text-align:center"><p>` + fileName + 
+                                            `</p></div>`);
                 }
             });
 
