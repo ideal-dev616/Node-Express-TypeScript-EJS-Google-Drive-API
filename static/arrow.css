@@ -49,10 +49,10 @@
 }
 
 .arrowbtn-last {
-  margin-top: 27px;
+  margin-top: 26px;
   margin-right: 36px;
   right: 20px;
-  height: 27px; width: 27px;
+  height: 25px; width: 25px;
 	border: 2px solid #59a6ea;
 	border-width: 2px 2px 0 0;
 	transform: rotate(45deg);
@@ -64,7 +64,7 @@
 	height: 25px; width: 25px;
 	border: 2px solid #59a6ea;
 	border-width: 2px 2px 0 0;
-	transform: translate(-22px, -5px);
+	transform: translate(-20px, -5px);
 }
 
 .arrowbtn-last:hover, .arrowbtn-last:hover::after{

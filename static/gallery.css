@@ -25,6 +25,9 @@
     background-color: #525251;
   }
   .gallery_pics p{
-    margin-top: -50px;
     color: white;
+    width: 310px;
+    margin: auto;
+    margin-top: -80px;
+
   }
