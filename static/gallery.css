@@ -24,10 +24,16 @@
     left: 0%;
     background-color: #525251;
   }
-  .gallery_pics p{
+  .gallery_pics.fullscreen p{
     color: white;
-    width: 310px;
+    width: 500px;
     margin: auto;
     margin-top: -80px;
+  }
 
+  .gallery_pics p{
+    color: black;
+    width: 330px;
+    margin: auto;
+    margin-top: 20px;
   }

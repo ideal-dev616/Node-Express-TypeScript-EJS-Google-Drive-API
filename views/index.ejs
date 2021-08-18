@@ -39,7 +39,6 @@
     <script>
         $(document).ready(function() {
             var imageList = [];
-            
             var index = 0;
             getImageList();
             var curImageId = "";
@@ -60,12 +59,7 @@
                             return;                         
                         }
                     });
-                    curImageId = imageList[index].id;
-                    let fileName = imageList[index].name;
-                    fileName = (imageList[index].name.length > 100) ? fileName.substring(0, 100) + "..." : fileName;
-                    $(".gallery_pics").html(`<img src="https://drive.google.com/thumbnail?id=` + curImageId + 
-                                            `&sz=h700" alt="No image found."><div style="width:100%; text-align:center"><p>` + fileName + 
-                                            `</p></div>`);
+                    updateImage(index);
                 }
             });
 
@@ -85,13 +79,7 @@
                             return;
                         }
                     });
-                    curImageId = imageList[index].id;
-                    let fileName = imageList[index].name;
-                    fileName = (imageList[index].name.length > 100) ? fileName.substring(0, 100) + "..." : fileName;
-                    
-                    $(".gallery_pics").html(`<img src="https://drive.google.com/thumbnail?id=` + curImageId + 
-                                            `&sz=h700" alt="No image found."><div style="width:100%; text-align:center"><p>` + fileName + 
-                                            `</p></div>`);
+                    updateImage(index);
                 }
             });
 
@@ -102,14 +90,19 @@
 
             function displayLastImage(){
                 if(imageList.length > 0){
-                    curImageId = imageList[0].id;
                     index = 0;
-                    let fileName = imageList[index].name;
-                    fileName = (imageList[index].name.length > 100) ? fileName.substring(0, 100) + "..." : fileName;
-                    $(".gallery_pics").html(`<img src="https://drive.google.com/thumbnail?id=` + imageList[index].id + 
-                                            `&sz=h700" alt="No image found."><div style="width:100%; text-align:center"><p>` + fileName + 
-                                            `</p></div>`);
+                    updateImage(index);
                 }
+            }
+
+            function updateImage(index){
+                curImageId = imageList[index].id;
+                let fileName = imageList[index].name;
+                fileName = fileName.split('.').slice(0, -1).join('.');
+                fileName = (imageList[index].name.length > 100) ? fileName.substring(0, 100) + "..." : fileName;
+                $(".gallery_pics").html(`<img src="https://drive.google.com/thumbnail?id=` + imageList[index].id + 
+                                        `&sz=h700" alt="No image found."><div style="width:100%; text-align:center"><p>` + fileName + 
+                                        `</p></div>`);
             }
 
             function getImageList(){
