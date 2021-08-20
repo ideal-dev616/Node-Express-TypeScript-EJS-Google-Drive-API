@@ -124,18 +124,22 @@
             function chimeBell() {
                 var audio = new Audio('/static/bell.mp3');
                 audio.play();
-                console.log("chimebell played");
+                // console.log("chimebell played");
+            }
+            
+            function autoUpdateForNoAction(){
+                getImageList(true);
             }
 
             // Update ImageList every 1 minute
-            setInterval((getImageList(true)), 60000);
+            setInterval((autoUpdateForNoAction), 60000);
 
             // If theres no activity for 2 minutes do something
-            var activityTimeout = setTimeout((getImageList(true)), 120000);
+            var activityTimeout = setTimeout((autoUpdateForNoAction), 120000);
 
             function resetActive(){
                 clearTimeout(activityTimeout);
-                activityTimeout = setTimeout(getImageList(true), 120000);
+                activityTimeout = setTimeout(getImageList, 120000);
             }
 
             $(document).bind('mousemove', function(){resetActive()});
