@@ -1,14 +1,14 @@
 .main-container{
     width: 100%;
     margin: auto;
-    padding-top: 50px;
+    padding-top: 30px;
     position: relative;
 }
 
 .title{
     color: #59a6ea;
     text-align: center;
-    font-size: 35px;
+    font-size: 50px;
     font-weight: 800;
     font-family: 'Playball', cursive;
 }

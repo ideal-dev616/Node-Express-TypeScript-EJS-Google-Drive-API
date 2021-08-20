@@ -26,14 +26,16 @@
   }
   .gallery_pics.fullscreen p{
     color: white;
-    width: 500px;
+    width: 600px;
     margin: auto;
-    margin-top: -80px;
+    margin-top: -130px;
   }
 
   .gallery_pics p{
     color: black;
-    width: 330px;
+    width: 600px;
     margin: auto;
     margin-top: 20px;
+    font-size: 23px;
+    font-weight: bold;
   }
