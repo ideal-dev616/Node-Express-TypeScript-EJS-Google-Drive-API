@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <title>Kibbx</title>
-
+    <link rel="shortcut icon" href="#">
     <link rel="stylesheet"  href="/static/arrow.css"/>
     <link rel="stylesheet"  href="/static/style.css"/>
     <link rel="stylesheet"  href="/static/gallery.css"/>
@@ -24,7 +24,7 @@
             <div class="img-container">
                 <div class="gallery_pics">
                     <img style="width:64px;height:64px;margin-top: 200px;" src="/static/loading1.gif">
-                    <p style="margin-top: 30px;font-size:18px;color: #59a6ea;">Loading ...</p>
+                    <p style="margin-top: 30px;font-size:18px;color: #59a6ea;">Loading...</p>
                 </div>
             </div>
             <div class="toolbar">
@@ -52,14 +52,17 @@
                         if(img.id == curImageId){
                             if(index == 0){
                                 index = idx;
-                                chimeBell();
                             }else{
                                 index = idx - 1;   
                             }
                             return;                         
                         }
                     });
-                    updateImage(index);
+                    if(index == imageList.length - 1){
+                        getImageList(true);
+                    }else{
+                        updateImage(index);
+                    }
                 }
             });
 
@@ -73,7 +76,8 @@
                         if(img.id == curImageId){
                             if(index == imageList.length - 1){
                                 index = idx;
-                                chimeBell();
+                                // chimeBell();
+                                
                             }else{
                                 index = idx + 1;   
                             }
@@ -93,7 +97,6 @@
                 if(imageList.length > 0){
                     index = 0;
                     updateImage(index);
-                    chimeBell();
                 }
             }
 
@@ -109,15 +112,16 @@
 
             function getImageList(chimebell){
                 $.getJSON("/api/getfiles", function(data){
+                    var oldImageList = imageList;
                     imageList = data;
                     // Sort images by createdTime (newer to older)
                     imageList.sort( function(a, b) {
                         return new Date(b.createdTime) - new Date(a.createdTime);
                     });
-                    // console.log("imageList => ", imageList);
                     displayLastImage();
-                    if(chimebell)
+                    if(chimebell && (oldImageList[0].id != imageList[0].id)){
                         chimeBell();
+                    }
                 });
             }
 
@@ -125,7 +129,7 @@
             function chimeBell() {
                 var audio = new Audio('/static/bell.mp3');
                 audio.play();
-                // console.log("chimebell played");
+                console.log("chimebell played");
             }
             
             function autoUpdateForNoAction(){
