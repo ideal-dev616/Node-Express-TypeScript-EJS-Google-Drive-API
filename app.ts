@@ -16,5 +16,4 @@ app.get('/api/getfiles', async (req, res, next) => {
 app.use('/static', express.static('static'));
 app.use('/scss', express.static('scss'));
 
-// app.listen(3001, () => console.info("Server is hosting on *.3001"));
-app.listen(80, () => console.info("Server is hosting on http://18.222.24.245/"));
+app.listen(80, () => console.info("Server is running..."));
