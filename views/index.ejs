@@ -101,31 +101,44 @@
             }
 
             function updateImage(index){
-                curImageId = imageList[index].id;
-                let fileName = imageList[index].name;
-                fileName = fileName.split('.').slice(0, -1).join('.');
-                fileName = (imageList[index].name.length > 100) ? fileName.substring(0, 100) + "..." : fileName;
-                $(".gallery_pics").html(`<img src="https://drive.google.com/thumbnail?id=` + imageList[index].id + 
-                                        `&sz=h700" alt="No image found."><div style="width:100%; text-align:center"><p>` + fileName + 
-                                        `</p></div>`);
+                console.log("imageList length => ", imageList.length);
+                try{
+                    curImageId = imageList[index].id;
+                    let fileName = imageList[index].name;
+                    fileName = fileName.split('.').slice(0, -1).join('.');
+                    fileName = (imageList[index].name.length > 100) ? fileName.substring(0, 100) + "..." : fileName;
+                    $(".gallery_pics").html(`<img class="picture" src="https://drive.google.com/thumbnail?id=` + imageList[index].id + 
+                                            `&sz=h700" alt="No image found."><div style="width:100%; text-align:center"><p>` + fileName + 
+                                            `</p></div>`);
+                }catch(ex){
+                    $(".gallery_pics").html(`<p style="margin-top: 30px;font-size:18px;color: #59a6ea;">No images found</p>`);
+                }
             }
 
             function getImageList(chimebell){
-                $.getJSON("/api/getfiles", function(data){
-                    var oldImageList = imageList;
-                    imageList = data;
-                    // Sort images by createdTime (newer to older)
-                    imageList.sort( function(a, b) {
-                        return new Date(b.createdTime) - new Date(a.createdTime);
-                    });                    
-                    // console.log("imageList =>", imageList);
-
-                    displayLastImage();
-                    if(chimebell && (oldImageList[0].id != imageList[0].id)){
-                        chimeBell();
-                    }
-
-                });
+                try{
+                    $.getJSON("/api/getfiles", function(data){
+                        if(data.length <= 0){
+                            console.log("data length => ", data.length);
+                            $(".gallery_pics").html(`<p style="margin-top: 250px;font-size:18px;color: #59a6ea;">No images found</p>`);
+                        }else{
+                            var oldImageList = imageList;
+                            imageList = data;
+                            // Sort images by createdTime (newer to older)
+                            imageList.sort( function(a, b) {
+                                return new Date(b.createdTime) - new Date(a.createdTime);
+                            });                    
+                            // console.log("imageList =>", imageList);
+        
+                            displayLastImage();
+                            if(chimebell && (oldImageList[0].id != imageList[0].id)){
+                                chimeBell();
+                            }
+                        }
+                    });
+                }catch(ex){
+                    $(".gallery_pics").html(`<p style="margin-top: 30px;font-size:18px;color: #59a6ea;">No images found</p>`);
+                }
             }
 
             // Audio Play
@@ -153,7 +166,7 @@
             $(document).bind('mousemove', function(){resetActive()});
 
             // Fullscreen toggle
-            $('.gallery_pics').click(function(e) {
+            $('.gallery_pics .picture').click(function(e) {
                 $(this).toggleClass('fullscreen');
             });
         });
