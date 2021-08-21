@@ -107,7 +107,7 @@
                     let fileName = imageList[index].name;
                     fileName = fileName.split('.').slice(0, -1).join('.');
                     fileName = (imageList[index].name.length > 100) ? fileName.substring(0, 100) + "..." : fileName;
-                    $(".gallery_pics").html(`<img class="picture" src="https://drive.google.com/thumbnail?id=` + imageList[index].id + 
+                    $(".gallery_pics").html(`<img src="https://drive.google.com/thumbnail?id=` + imageList[index].id + 
                                             `&sz=h700" alt="No image found."><div style="width:100%; text-align:center"><p>` + fileName + 
                                             `</p></div>`);
                 }catch(ex){
@@ -119,7 +119,7 @@
                 try{
                     $.getJSON("/api/getfiles", function(data){
                         if(data.length <= 0){
-                            console.log("data length => ", data.length);
+                            // console.log("data length => ", data.length);
                             $(".gallery_pics").html(`<p style="margin-top: 250px;font-size:18px;color: #59a6ea;">No images found</p>`);
                         }else{
                             var oldImageList = imageList;
@@ -145,7 +145,7 @@
             function chimeBell() {
                 var audio = new Audio('/static/bell.mp3');
                 audio.play();
-                console.log("chimebell played");
+                // console.log("chimebell played");
             }
             
             function autoUpdateForNoAction(){
@@ -166,7 +166,7 @@
             $(document).bind('mousemove', function(){resetActive()});
 
             // Fullscreen toggle
-            $('.gallery_pics .picture').click(function(e) {
+            $('.gallery_pics').click(function(e) {
                 $(this).toggleClass('fullscreen');
             });
         });
