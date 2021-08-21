@@ -48,18 +48,16 @@ export class GoogleDriveService {
         },
         async (err, res: { data }) => {
           var files = res.data.files;
-          if (files && files.length > 0) {
-              for (var i = 0; i < files.length; i++) {
-                  var file = files[i];
-                  if(file.mimeType == "application/vnd.google-apps.folder"){
-                      await this.getImageList(file['id']);
-                  }else if(file.mimeType == "image/jpeg" || file.mimeType == "image/png"){
-                      this.imageFileInfo = {"id":file.id, "name":file.name, "mimeType":file.mimeType, "createdTime": file.createdTime};
-                      this.imageFileList.push(this.imageFileInfo);
-                  }
+          // console.log("response files =>", files);
+          for (var i = 0; i < files.length; i++) {
+              var file = files[i];
+              if(file.mimeType == "application/vnd.google-apps.folder"){
+                  // console.log("i => ", i);
+                  await this.getImageList(file['id']);
+              }else if(file.mimeType == "image/jpeg" || file.mimeType == "image/png"){
+                  this.imageFileInfo = {"id":file.id, "name":file.name, "mimeType":file.mimeType, "createdTime": file.createdTime};
+                  this.imageFileList.push(this.imageFileInfo);
               }
-          } else {
-              this.imageFileList.push(null);
           }
           resolve(this.imageFileList);
         },

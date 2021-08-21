@@ -117,8 +117,8 @@
                     // Sort images by createdTime (newer to older)
                     imageList.sort( function(a, b) {
                         return new Date(b.createdTime) - new Date(a.createdTime);
-                    });
-                    console.log("imageList =>", imageList);
+                    });                    
+                    // console.log("imageList =>", imageList);
 
                     displayLastImage();
                     if(chimebell && (oldImageList[0].id != imageList[0].id)){
