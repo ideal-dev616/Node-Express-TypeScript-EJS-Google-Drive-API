@@ -16,4 +16,4 @@ app.get('/api/getfiles', async (req, res, next) => {
 app.use('/static', express.static('static'));
 app.use('/scss', express.static('scss'));
 
-app.listen(80, () => console.info("Server is running..."));
+app.listen(9000, () => console.info("Server is running..."));

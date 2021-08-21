@@ -8,7 +8,7 @@ const driveClientId = process.env.GOOGLE_DRIVE_CLIENT_ID || '';
 const driveClientSecret = process.env.GOOGLE_DRIVE_CLIENT_SECRET || '';
 const driveRedirectUri = process.env.GOOGLE_DRIVE_REDIRECT_URI || '';
 const driveRefreshToken = process.env.GOOGLE_DRIVE_REFRESH_TOKEN || '';
-const folderId = '1hl65CYzxpQ4x5urLdq84lGhxa-kBKvQu';
+const folderId = process.env.GOOGLE_DRIVE_KIBBX_ID || '';
 
 export class GoogleDriveService {
   public imageFileList = new Array;
